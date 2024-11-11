@@ -10,16 +10,20 @@ public class DNA {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private List<String> dna;
+    private String[] dna;
     private Boolean isMutant;
 
     public DNA() {
     }
 
-    public DNA(Long id, List<String> dna, Boolean isMutant) {
+    public DNA( String[] dna) {
+        this.dna = dna;
+        this.isMutant = false;
+    }
+    public DNA(Long id, String[] dna) {
         this.id = id;
         this.dna = dna;
-        this.isMutant = isMutant;
+        this.isMutant = false;
     }
 
     public Boolean getIsMutant() {
@@ -38,18 +42,11 @@ public class DNA {
         this.id = id;
     }
 
-    public List<String> getDna() {
+    public String[] getDna() {
         return dna;
     }
 
-    public void setDna(List<String> dna) {
+    public void setDna(String[] dna) {
         this.dna = dna;
-    }
-
-    @Override
-    public String toString() {
-        return "DNA{" +
-                "sequences=" + dna +
-                '}';
     }
 }

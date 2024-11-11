@@ -1,6 +1,8 @@
 package com.example.mercado_libre_exam.Controller;
 
 
+import com.example.mercado_libre_exam.Exception.EmptyDNASequenceException;
+import com.example.mercado_libre_exam.Exception.InvalidCharactersException;
 import com.example.mercado_libre_exam.Model.DNA;
 import com.example.mercado_libre_exam.Model.DTOs.StatisticsDTO;
 import com.example.mercado_libre_exam.Service.DNAService;
@@ -17,13 +19,14 @@ public class DNAController {
 
     @Autowired
     private DNAService dnaService;
-    @GetMapping
-    public List<DNA> getAll(){
+    @PostMapping
+    public ResponseEntity<String> checkIsMutant(@RequestBody DNA dna) throws InvalidCharactersException, EmptyDNASequenceException {
 
-        List<DNA> dnaList = dnaService.getAll();
-        return dnaList;
+        Boolean isMutant = dnaService.isMutant(dna);
+
+        return isMutant ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
-
     @GetMapping("/stats")
     public ResponseEntity<StatisticsDTO> getStatistics(){
 
@@ -31,14 +34,9 @@ public class DNAController {
 
         return ResponseEntity.ok(statisticsDTO);
     }
-    @PostMapping
-    public ResponseEntity<String> checkIsMutant(@RequestBody DNA dna){
 
-        Boolean isMutant = dnaService.checkIsMutant(dna);
 
-        return isMutant ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
+
 
 
 }

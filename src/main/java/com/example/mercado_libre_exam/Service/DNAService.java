@@ -1,6 +1,8 @@
 package com.example.mercado_libre_exam.Service;
 
 
+import com.example.mercado_libre_exam.Exception.EmptyDNASequenceException;
+import com.example.mercado_libre_exam.Exception.InvalidCharactersException;
 import com.example.mercado_libre_exam.Model.DNA;
 import com.example.mercado_libre_exam.Model.DTOs.StatisticsDTO;
 import com.example.mercado_libre_exam.Repository.DNARepository;
@@ -11,293 +13,54 @@ import java.util.List;
 
 @Service
 public class DNAService {
-
     @Autowired
     private DNARepository dnaRepository;
-    public Boolean checkIsMutant(DNA dna){
+    public Boolean isMutant(DNA dna) throws InvalidCharactersException, EmptyDNASequenceException {
+
+        validateDNACharacters(dna.getDna());
+        validateEmptyDNASequence(dna.getDna());
 
         Boolean isMutant = false;
-
         int coincidences = 0;
+        String[] dnaSequence = dna.getDna();
+        int[][] directions = {
+                {0, 1}, {0, -1}, {1, 0}, {-1, 0}, // Right, Left, Down, Up
+                {1, 1}, {-1, -1}, {1, -1}, {-1, 1} // Down Right, Up Left, Down Left, Up Right
+        };
 
-        List<String> list = dna.getDna();
 
-        for (int x = 0; x < list.size() ; x++) {
+        for (int x = 0; x < dnaSequence.length ; x++) {
 
-            char[] charArray = list.get(x).toCharArray();
+            String currentRow = dnaSequence[x];
+            char[] charArray = currentRow.toCharArray();
 
             for (int z = 0; z < charArray.length; z++) {
+                char currentLetter = charArray[z];
 
-                char currentLetter= charArray[z];
+                for (int[] direction : directions) {
+                    int dx= direction[0];
+                    int dz= direction[1];
 
-                System.out.println("------Soy la letra principal------- / " + charArray[z]);
-
-                if((z + 1) < charArray.length){
-
-                    char rightChar = charArray[z + 1];
-
-                    if(currentLetter == rightChar){
-
-                        System.out.println("Tenemos coincidencia en la direccion: Derecha");
-
-                        if( (z + 2) < charArray.length){
-
-                            char rightCharPlus = charArray[z + 2];
-
-                            if(rightCharPlus == rightChar){
-
-                                System.out.println("Tenemos segunda coincidencia en la direccion: Derecha");
-
-                                if( (z + 3) < charArray.length){
-
-                                    char rightCharPlusPlus = charArray[z + 3];
-
-                                    if(rightCharPlusPlus == rightCharPlus){
-                                        System.out.println("Tenemos una tercera coincidencia en la direccion: Derecha");
-                                        System.out.println("Secuencia ADN encontrada");
-                                        coincidences++;
-                                    }
-                                }
-                            }
-                        }
+                    if(findSequence(dnaSequence, x, z, dx, dz,currentLetter)) {
+                        System.out.println("DNA sequence found at direction: (" + dx + ", " + dz + ")");
+                        coincidences++;
                     }
+
                 }
 
-                if((z - 1) >= 0){
-
-                    char leftChar = charArray[z - 1];
-
-                    if(currentLetter == leftChar){
-                        System.out.println("Tenemos coincidencia en la direccion: Izquierda");
-
-                        if((z - 2) >= 0){
-
-                            char leftCharPlus = charArray[z - 2];
-
-                            if(leftCharPlus == leftChar){
-
-                                System.out.println("Tenemos segunda coincidencia en la direccion: Izquierda");
-
-                                if((z - 3) >= 0){
-
-                                    char leftCharPlusPlus = charArray[z - 3];
-
-                                    if(leftCharPlusPlus == leftCharPlus){
-                                        System.out.println("Tenemos una tercera coincidencia en la direccion: Izquierda");
-                                        System.out.println("Secuencia ADN encontrada");
-                                        coincidences++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if((x + 1) < list.size()){
-
-                    char downChar = list.get(x + 1).toCharArray()[z];
-
-                    if(currentLetter == downChar){
-
-                        System.out.println("Tenemos coincidencia en la direccion: Abajo");
-
-                        if((x + 2) < list.size()){
-
-                            char downCharPlus = list.get(x + 2).toCharArray()[z];
-
-                            if(downCharPlus == downChar){
-
-                                System.out.println("Tenemos segunda coincidencia en la direccion: Abajo");
-
-                                if((x + 3) < list.size()){
-
-                                    char downCharPlusPlus = list.get(x + 3).toCharArray()[z];
-
-                                    if(downCharPlusPlus == downCharPlus){
-                                        System.out.println("Tenemos una tercera coincidencia en la direccion: Abajo");
-                                        System.out.println("Secuencia ADN encontrada");
-                                        coincidences++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if((x + 1) < list.size() && (z - 1) >= 0){
-
-                    char downLeftChar = list.get(x + 1).toCharArray()[z - 1];
-
-                    if(currentLetter == downLeftChar){
-                        System.out.println("Tenemos coincidencia en la direccion: Abajo izq");
-
-                        if((x + 2) < list.size() && (z - 2) >= 0){
-
-                            char downLeftCharPlus = list.get(x + 2).toCharArray()[z - 2];
-
-                            if(downLeftCharPlus == downLeftChar){
-
-                                System.out.println("Tenemos segunda coincidencia en la direccion: Abajo izq");
-
-                                if((x + 3) < list.size() && (z - 3) >= 0){
-
-                                    char downLeftCharPlusPlus = list.get(x + 3).toCharArray()[z - 3];
-
-                                    if(downLeftCharPlusPlus == downLeftCharPlus){
-                                        System.out.println("Tenemos una tercera coincidencia en la direccion: Abajo izq");
-                                        System.out.println("Secuencia ADN encontrada");
-                                        coincidences++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if((x + 1) < list.size() && (z + 1) < charArray.length){
-
-                    char downRightChar = list.get(x + 1).toCharArray()[z + 1];
-
-                    if(currentLetter == downRightChar){
-                        System.out.println("Tenemos coincidencia en la direccion: Abajo der");
-
-                        if((x + 2) < list.size() && (z + 2) < charArray.length){
-
-                            char downRightCharPlus = list.get(x + 2).toCharArray()[z + 2];
-
-                            if(downRightCharPlus == downRightChar){
-
-                                System.out.println("Tenemos segunda coincidencia en la direccion: Abajo der");
-
-                                if((x + 3) < list.size() && (z + 3) < charArray.length){
-
-                                    char downLRightCharPlusPlus = list.get(x + 3).toCharArray()[z + 3];
-
-                                    if(downLRightCharPlusPlus == downRightCharPlus){
-                                        System.out.println("Tenemos una tercera coincidencia en la direccion: Abajo Der");
-                                        System.out.println("Secuencia ADN encontrada");
-                                        coincidences++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if((x - 1) >= 0){
-
-                    char upChar = list.get(x - 1).toCharArray()[z];
-
-                    if(currentLetter == upChar){
-                        System.out.println("Tenemos coincidencia en la direccion: Arriba");
-
-                        if((x - 2) >= 0){
-
-                            char upCharPlus = list.get(x - 2).toCharArray()[z];
-
-                            if(upCharPlus == upChar){
-
-                                System.out.println("Tenemos segunda coincidencia en la direccion: Arriba");
-
-                                if((x - 3) >= 0){
-
-                                    char upCharPlusPlus = list.get(x - 3).toCharArray()[z];
-
-                                    if(upCharPlusPlus == upCharPlus){
-                                        System.out.println("Tenemos una tercera coincidencia en la direccion: Arriba");
-                                        System.out.println("Secuencia ADN encontrada");
-                                        coincidences++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if((x - 1) >= 0 && (z + 1) < charArray.length){
-
-                    char upRightChar = list.get(x - 1).toCharArray()[z + 1];
-
-                    if(currentLetter == upRightChar){
-
-                        System.out.println("Tenemos coincidencia en la direccion: Arriba der");
-
-                        if((x - 2) >= 0 && (z + 2) < charArray.length){
-
-                            char upRightCharPlus = list.get(x - 2).toCharArray()[z + 2];
-
-                            if(upRightCharPlus == upRightChar){
-
-                                System.out.println("Tenemos segunda coincidencia en la direccion: Arriba der");
-
-                                if((x - 3) >= 0 && (z + 3) < charArray.length){
-
-                                    char upRightCharPlusPlus = list.get(x - 3).toCharArray()[z + 3];
-
-                                    if(upRightCharPlusPlus == upRightCharPlus){
-                                        System.out.println("Tenemos una tercera coincidencia en la direccion: Arriba der");
-                                        System.out.println("Secuencia ADN encontrada");
-                                        coincidences++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if((x - 1) >= 0 && (z - 1) >= 0){
-
-                    char upLeftChar = list.get(x - 1).toCharArray()[z - 1];
-
-                    if(currentLetter == upLeftChar){
-                        System.out.println("Tenemos coincidencia en la direccion: Arriba izq");
-
-                        if((x - 2) >= 0 && (z - 2) >= 0){
-
-                            char upLeftCharPlus = list.get(x - 2).toCharArray()[z - 2];
-
-                            if(upLeftCharPlus == upLeftChar){
-
-                                System.out.println("Tenemos segunda coincidencia en la direccion: Arriba izq");
-
-                                if((x - 3) >= 0 && (z - 3) >= 0){
-
-                                    char upLeftCharPlusPlus = list.get(x - 3).toCharArray()[z - 3];
-
-                                    if(upLeftCharPlusPlus == upLeftCharPlus){
-                                        System.out.println("Tenemos una tercera coincidencia en la direccion: Arriba izq");
-                                        System.out.println("Secuencia ADN encontrada");
-                                        coincidences++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
-
         }
-
 
         if(coincidences > 2)
         {
             isMutant = true;
         }
 
-        System.out.println(coincidences);
-        System.out.println(coincidences / 2);
-        System.out.println(isMutant);
-
         dna.setIsMutant(isMutant);
-
         dnaRepository.save(dna);
 
         return isMutant;
     }
-    public List<DNA> getAll(){
-        return dnaRepository.findAll();
-    }
-
     public StatisticsDTO getStatistics(){
 
         StatisticsDTO statisticsDTO = new StatisticsDTO();
@@ -323,6 +86,37 @@ public class DNAService {
 
         return statisticsDTO;
     }
+    private boolean findSequence(String[] list, int startX, int startZ, int dx, int dz, char currentLetter) {
+        int count = 1;
+        int x = startX;
+        int z = startZ;
 
+        for (int i = 1; i < 4; i++) {
+            x += dx;
+            z += dz;
+            if (x < 0 || x >= list.length || z < 0 || z >= list[x].length()) {
+                return false;
+            }
 
+            if (list[x].charAt(z) == currentLetter) {
+                count++;
+            } else {
+                return false;
+            }
+        }
+
+        return count == 4;
+    }
+    private void validateDNACharacters(String[] dna) throws InvalidCharactersException {
+        for (String row : dna) {
+            if (!row.matches("(?i)[ATCG]+")) {
+                throw new InvalidCharactersException("Invalid characters DNA sequence can only be (A, T, C, G)");
+            }
+        }
+    }
+    private void validateEmptyDNASequence(String[] dna) throws EmptyDNASequenceException {
+        if (dna == null || dna.length == 0) {
+            throw new EmptyDNASequenceException("DNA sequence array cannot be null or empty");
+        }
+    }
 }
