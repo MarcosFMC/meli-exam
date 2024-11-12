@@ -13,6 +13,7 @@ Esta API REST permite analizar secuencias de ADN para identificar si un individu
 - [Pruebas](#pruebas)
     - [Pruebas Unitarias](#pruebas-unitarias)
     - [Pruebas de Integración](#pruebas-de-integración)
+- [Probar en la Nube](#probar-en-la-nube)
 - [Autor](#autor)
 
 ## Descripción
@@ -21,24 +22,20 @@ Esta API recibe una secuencia de ADN representada como un array de strings, en l
 
 ## Tecnologías
 
-- **Java 11** o superior
+- **Java 17**
 - **Spring Boot**
 - **Maven** como herramienta de construcción
-- **Render** para despliegue (u otro servicio en la nube)
+- **Render** para despliegue
 
 ## Instalación
 
 1. Clona el repositorio en tu máquina local:
     ```bash
-    git clone https://github.com/tu-usuario/tu-repositorio.git
-    cd tu-repositorio
+    git clone https://github.com/MarcosFMC/meli-exam
+    cd meli-exam
     ```
 
 2. Asegúrate de tener Maven instalado.
-
-3. Configura las variables de entorno necesarias:
-    - `PORT`: El puerto en el que deseas que la API se ejecute. Si usas Render, esta variable se asignará automáticamente.
-
 4. Ejecuta la aplicación localmente:
     ```bash
     mvn spring-boot:run
@@ -66,19 +63,28 @@ La API debería estar disponible en `http://localhost:8080` o en el puerto confi
     - `200 OK`: Si la secuencia corresponde a un mutante.
     - `403 Forbidden`: Si la secuencia corresponde a un humano.
 
-- **Ejemplo de Petición**:
+#### Ejemplo de Petición (Postman o `curl`):
+
+1. **Desde localhost (si lo estás ejecutando localmente):**
     ```bash
     curl -X POST http://localhost:8080/mutant -H "Content-Type: application/json" -d '{"dna":["AAAAGA","CCGTAC","ATATGG","GAAAGA","CCCCTA","TCAATT"]}'
     ```
 
-- **Ejemplo de Respuesta (200 OK)**:
+2. **Desde el host desplegado en Render (https://meli-exam.onrender.com):**
+    ```bash
+    curl -X POST https://meli-exam.onrender.com/mutant -H "Content-Type: application/json" -d '{"dna":["AAAAGA","CCGTAC","ATATGG","GAAAGA","CCCCTA","TCAATT"]}'
+    ```
+
+#### Respuesta Esperada:
+
+- **Si la secuencia es mutante (200 OK)**:
     ```json
     {
       "message": "Mutant DNA detected"
     }
     ```
 
-- **Ejemplo de Respuesta (403 Forbidden)**:
+- **Si la secuencia es humana (403 Forbidden)**:
     ```json
     {
       "message": "Human DNA detected"
@@ -90,22 +96,28 @@ La API debería estar disponible en `http://localhost:8080` o en el puerto confi
 - **Descripción**: Obtiene estadísticas de la cantidad de secuencias mutantes y humanas analizadas, y el ratio entre ellas.
 - **URL**: `/mutant/stats`
 - **Método**: `GET`
-- **Respuestas**:
-    - `200 OK`
 
-- **Ejemplo de Petición**:
+#### Ejemplo de Petición (Postman o `curl`):
+
+1. **Desde localhost (si lo estás ejecutando localmente):**
     ```bash
     curl -X GET http://localhost:8080/mutant/stats
     ```
 
-- **Ejemplo de Respuesta**:
-    ```json
-    {
-      "count_mutant_dna": 1,
-      "count_human_dna": 1,
-      "ratio": 1.0
-    }
+2. **Desde el host desplegado en Render (https://meli-exam.onrender.com):**
+    ```bash
+    curl -X GET https://meli-exam.onrender.com/mutant/stats
     ```
+
+#### Respuesta Esperada:
+```json
+{
+  "count_mutant_dna": 1,
+  "count_human_dna": 1,
+  "ratio": 1.0
+}
+```
+
 
 ## Pruebas
 
@@ -218,5 +230,4 @@ Las pruebas de integración verifican la funcionalidad de los endpoints de la AP
     ```java
     @Test
     public void testStatsEndpointReturnsCorrectStats() throws Exception {
-        String responseExpected = "{\"count_mutant_dna\":1,\"count_human_dna\":1,\"ratio\":1.0}";
-        String[] dnaMutantSequence = {"AAAAGA","CCGTAC","ATATGG","
+        String responseExpected = "{\"count_mutant_dna\":1,\"count_human_dna\":1,\"ratio
