@@ -1,0 +1,11 @@
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Configuration\ServerConfig.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Controller\DNAController.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Exception\EmptyDNASequenceException.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Exception\GlobalExceptionHandler.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Exception\InvalidCharactersException.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\MercadoLibreExamApplication.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Model\DNA.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Model\DTOs\ErrorMessageDTO.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Model\DTOs\StatisticsDTO.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Repository\DNARepository.java
+C:\Users\AyiGroup\Desktop\Spring Projects\mercado-libre-exam\src\main\java\com\example\mercado_libre_exam\Service\DNAService.java

@@ -1,0 +1,11 @@
+com\example\mercado_libre_exam\Model\DTOs\ErrorMessageDTO.class
+com\example\mercado_libre_exam\Model\DTOs\StatisticsDTO.class
+com\example\mercado_libre_exam\Exception\EmptyDNASequenceException.class
+com\example\mercado_libre_exam\Controller\DNAController.class
+com\example\mercado_libre_exam\MercadoLibreExamApplication.class
+com\example\mercado_libre_exam\Exception\InvalidCharactersException.class
+com\example\mercado_libre_exam\Model\DNA.class
+com\example\mercado_libre_exam\Configuration\ServerConfig.class
+com\example\mercado_libre_exam\Service\DNAService.class
+com\example\mercado_libre_exam\Exception\GlobalExceptionHandler.class
+com\example\mercado_libre_exam\Repository\DNARepository.class
