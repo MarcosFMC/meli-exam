@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "12eaadf5-5456-4c9b-858c-b4047accea26",
+		"name": "meli-exam-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24727624"
+	},
+	"item": [
+		{
+			"name": "getStats",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "checkIsMutant-NonMutantCase",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dna\":[\"ACACGA\",\"CCGTAC\",\"TTACGG\",\"GCCAGA\",\"CACTTA\",\"TCACTT\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://meli-exam.onrender.com/mutant",
+					"protocol": "https",
+					"host": [
+						"meli-exam",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"mutant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "checkIsMutant-MutantCase",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dna\":[\"ACACGA\",\"CAGTAC\",\"CTACGG\",\"GCCAGA\",\"CACCTA\",\"TCACTT\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://meli-exam.onrender.com/mutant",
+					"protocol": "https",
+					"host": [
+						"meli-exam",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"mutant"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

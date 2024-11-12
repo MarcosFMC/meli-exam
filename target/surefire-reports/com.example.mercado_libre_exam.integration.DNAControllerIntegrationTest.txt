@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.example.mercado_libre_exam.integration.DNAControllerIntegrationTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.36 s -- in com.example.mercado_libre_exam.integration.DNAControllerIntegrationTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 32.20 s -- in com.example.mercado_libre_exam.integration.DNAControllerIntegrationTest
