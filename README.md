@@ -2,7 +2,7 @@
 
 Esta API REST permite analizar secuencias de ADN para identificar si un individuo es mutante o humano. Proporciona un endpoint para verificar una secuencia de ADN y otro para obtener estadísticas sobre las secuencias analizadas.
 
-Pruebas de endpoints /mutant-/mutant/stats en video. ([https://github.com/MarcosFMC](https://drive.google.com/file/d/1ot_hY5lcQggPGmtCQo6klvp2dZmGpBn7/view?usp=sharing)).
+Pruebas de API en video. (https://drive.google.com/file/d/1ot_hY5lcQggPGmtCQo6klvp2dZmGpBn7/view?usp=sharing).
 
 ## Tabla de Contenidos
 
