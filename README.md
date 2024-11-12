@@ -231,3 +231,8 @@ Las pruebas de integración verifican la funcionalidad de los endpoints de la AP
     @Test
     public void testStatsEndpointReturnsCorrectStats() throws Exception {
         String responseExpected = "{\"count_mutant_dna\":1,\"count_human_dna\":1,\"ratio
+
+
+## Autor
+
+Desarrollado por MarcosFMC (https://github.com/MarcosFMC).
