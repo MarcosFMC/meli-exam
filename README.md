@@ -203,11 +203,13 @@ Las pruebas de integración verifican la funcionalidad de los endpoints de la AP
     @Test
     public void testMutantEndpointReturn200ForMutantDNA() throws Exception {
         String dnaSequenceJson = "{\"dna\":[\"AAAAGA\",\"CCGTAC\",\"ATATGG\",\"GAAAGA\",\"CCCCTA\",\"TCAATT\"]}";
+        String responseExpected = "{\"message\":\"Mutant DNA detected\"}";
+        
         mockMvc.perform(post("/mutant")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(dnaSequenceJson)
                         .accept(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isOk());
+                        .andExpect(status().isOk()).andExpect(content().string(responseExpected));
     }
     ```
 
@@ -217,11 +219,13 @@ Las pruebas de integración verifican la funcionalidad de los endpoints de la AP
     @Test
     public void testMutantEndpointReturn403ForNonMutantDNA() throws Exception {
         String dnaSequenceJson = "{\"dna\":[\"ACACGA\",\"CCGTAC\",\"TTACGG\",\"GCCAGA\",\"CACTTA\",\"TCACTT\"]}";
+        String responseExpected = "{\"message\":\"Human DNA detected\"}";
+        
         mockMvc.perform(post("/mutant")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(dnaSequenceJson)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden()).andExpect(content().string(responseExpected));
     }
     ```
 
